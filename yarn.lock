@@ -5637,6 +5637,10 @@ react-native-screens@^2.10.1:
   version "2.10.1"
   resolved "https://registry.npm.taobao.org/react-native-screens/download/react-native-screens-2.10.1.tgz#06d22fae87ef0ce51c616c34a199726db1403b95"
   integrity sha1-BtIvrofvDOUcYWw0oZlybbFAO5U=
+react-native-image-picker@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.npm.taobao.org/react-native-image-picker/download/react-native-image-picker-2.3.3.tgz#eaacd4a1ed9e9887613be31f0765478ca2f18a51"
+  integrity sha1-6qzUoe2emIdhO+MfB2VHjKLxilE=
 
 react-native@0.63.2:
   version "0.63.2"
