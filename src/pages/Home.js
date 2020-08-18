@@ -1,6 +1,5 @@
 import React from 'react'
 import {View, Button, StyleSheet} from 'react-native'
-import {block} from 'react-native-reanimated'
 
 export default function HomeScreen({navigation}) {
     return (
