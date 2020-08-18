@@ -6,8 +6,9 @@ import {
     CardStyleInterpolators,
 } from '@react-navigation/stack'
 import HomeScreen from './pages/Home'
-import P1Screen from './pages/P1'
-import P2Screen from './pages/P2'
+import ApplyScreen from './pages/Apply'
+import SelectScreen from './pages/Select'
+import FaceScreen from './pages/Face'
 
 const Stack = createStackNavigator()
 
@@ -28,17 +29,24 @@ export default function Navigation() {
                     }}
                 />
                 <Stack.Screen
-                    name="P1"
-                    component={P1Screen}
+                    name="Apply"
+                    component={ApplyScreen}
                     options={{
-                        title: '病案打印',
+                        title: '申请',
                     }}
                 />
                 <Stack.Screen
-                    name="P2"
-                    component={P2Screen}
+                    name="Select"
+                    component={SelectScreen}
                     options={{
-                        title: '人脸识别',
+                        title: '选择病案',
+                    }}
+                />
+                <Stack.Screen
+                    name="Face"
+                    component={FaceScreen}
+                    options={{
+                        title: '人脸比对',
                     }}
                 />
             </Stack.Navigator>

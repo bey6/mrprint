@@ -7,13 +7,13 @@ export default function HomeScreen({navigation}) {
             <View style={styles.button}>
                 <Button
                     title="病案打印"
-                    onPress={() => navigation.navigate('P1')}
+                    onPress={() => navigation.navigate('Apply')}
                 />
             </View>
             <View style={styles.button}>
                 <Button
                     title="人脸比对"
-                    onPress={() => navigation.navigate('P1')}
+                    onPress={() => navigation.navigate('Face')}
                 />
             </View>
             <View style={styles.button}>

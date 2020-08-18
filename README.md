@@ -26,3 +26,24 @@ import {
             CardStyleInterpolators.forHorizontalIOS,
     }}>
 ```
+
+## PERMISSION
+
+给应用添加 Permission 的方法：
+
+`android/app/src/main/AndroidManifest.xml`
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.mrprint">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 这里 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+</manifest>
+```
+
+添加完了之后需要重新启动项目。
