@@ -9,6 +9,7 @@ import HomeScreen from './pages/Home'
 import ApplyScreen from './pages/Apply'
 import SelectScreen from './pages/Select'
 import FaceScreen from './pages/Face'
+import OcrScreen from './pages/Ocr'
 
 const Stack = createStackNavigator()
 
@@ -47,6 +48,13 @@ export default function Navigation() {
                     component={FaceScreen}
                     options={{
                         title: '人脸比对',
+                    }}
+                />
+                <Stack.Screen
+                    name="Ocr"
+                    component={OcrScreen}
+                    options={{
+                        title: 'OCR 识别',
                     }}
                 />
             </Stack.Navigator>
