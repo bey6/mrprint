@@ -11,4 +11,17 @@ export default StyleSheet.create({
         borderColor: 'gray',
         fontSize: 20,
     },
+    button: {
+        backgroundColor: '#369',
+        borderRadius: 3,
+        margin: 12,
+        padding: 12,
+    },
+    button__text: {
+        fontSize: 20,
+        color: '#fff',
+    },
+    row_center: {
+        alignItems: 'center',
+    },
 })

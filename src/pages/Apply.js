@@ -6,9 +6,9 @@ import {
     Text,
     TextInput,
     StyleSheet,
-    TouchableOpacity,
+    TouchableNativeFeedback,
 } from 'react-native'
-import Styles from '../styles/style'
+import styles from '../styles/style'
 
 import ImagePicker from 'react-native-image-picker'
 
@@ -27,49 +27,56 @@ export default function ApplyScreen({navigation}) {
     return (
         <View style={localStyles.page}>
             <View style={localStyles.inlineTextImage}>
-                <Text style={Styles.Text}>姓名</Text>
+                <Text style={styles.Text}>姓名</Text>
                 <TextInput
-                    style={Styles.TextInput}
+                    style={styles.TextInput}
                     value={value}
                     onChangeText={(t) => onChangeText(t)}
                 />
             </View>
             <View style={localStyles.inlineTextImage}>
-                <Text style={Styles.Text}>身份证号</Text>
-                <TextInput style={Styles.TextInput} keyboardType="numeric" />
+                <Text style={styles.Text}>身份证号</Text>
+                <TextInput style={styles.TextInput} keyboardType="numeric" />
             </View>
             <View style={localStyles.inlineTextImage}>
-                <Text style={Styles.Text}>身份证人像面</Text>
-                <TouchableOpacity onPress={() => getPicture(onChangeFaceImg)}>
+                <Text style={styles.Text}>身份证人像面</Text>
+                <TouchableNativeFeedback
+                    onPress={() => getPicture(onChangeFaceImg)}>
                     <Image
                         style={localStyles.photo}
                         resizeMode="contain"
                         source={face}
                     />
-                </TouchableOpacity>
+                </TouchableNativeFeedback>
             </View>
             <View style={localStyles.inlineTextImage}>
-                <Text style={Styles.Text}>身份证国徽面</Text>
-                <TouchableOpacity onPress={() => getPicture(onChangeEmblemImg)}>
+                <Text style={styles.Text}>身份证国徽面</Text>
+                <TouchableNativeFeedback
+                    onPress={() => getPicture(onChangeEmblemImg)}>
                     <Image
                         style={localStyles.photo}
                         resizeMode="contain"
                         source={emblem}
                     />
-                </TouchableOpacity>
+                </TouchableNativeFeedback>
             </View>
             <View style={localStyles.inlineTextImage}>
-                <Text style={Styles.Text}>手持身份证人像面</Text>
-                <TouchableOpacity onPress={() => getPicture(onChangePersonImg)}>
+                <Text style={styles.Text}>手持身份证人像面</Text>
+                <TouchableNativeFeedback
+                    onPress={() => getPicture(onChangePersonImg)}>
                     <Image
                         style={localStyles.photo}
                         resizeMode="contain"
                         source={person}
                     />
-                </TouchableOpacity>
+                </TouchableNativeFeedback>
             </View>
-            <View style={localStyles.buttonView}>
-                <Button title="下一步" onPress={() => onPress(navigation)} />
+            <View>
+                <TouchableNativeFeedback onPress={() => onPress(navigation)}>
+                    <View style={[styles.row_center, styles.button]}>
+                        <Text style={styles.button__text}>下一步</Text>
+                    </View>
+                </TouchableNativeFeedback>
             </View>
         </View>
     )

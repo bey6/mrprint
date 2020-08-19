@@ -40,7 +40,7 @@ export default function Navigation() {
                     name="Select"
                     component={SelectScreen}
                     options={{
-                        title: '选择病案',
+                        title: '打印病案选择',
                     }}
                 />
                 <Stack.Screen
