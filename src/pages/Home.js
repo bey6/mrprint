@@ -1,66 +1,50 @@
 import React from 'react'
 import {
     View,
+    Text,
     Image,
-    Button,
     StyleSheet,
     TouchableNativeFeedback,
 } from 'react-native'
-
+import style from '../styles/style'
 export default function HomeScreen({navigation}) {
+    const title = {
+        fontSize: 50,
+        margin: 30,
+    }
     return (
         <View style={styles.home}>
-            {/* <View style={styles.button}>
-                <Button
-                    title="病案打印"
-                    onPress={() => navigation.navigate('Apply')}
-                />
-            </View>
-            <View style={styles.button}>
-                <Button
-                    title="人脸比对"
-                    onPress={() => navigation.navigate('Face')}
-                />
-            </View>
-            <View style={styles.button}>
-                <Button
-                    title="图文识别"
-                    onPress={() => navigation.navigate('Ocr')}
-                />
-            </View> */}
-            <View style={styles.row}>
+            <Text style={title}>DEMO LIST</Text>
+            <View style={style.button}>
                 <TouchableNativeFeedback
                     onPress={() => navigation.navigate('Apply')}>
-                    <View style={styles.customButton}>
-                        <Image
-                            source={require('../assets/Printer.png')}
-                            resizeMode="contain"
-                        />
-                    </View>
+                    <Image
+                        source={require('../assets/Printer.png')}
+                        resizeMode="contain"
+                    />
                 </TouchableNativeFeedback>
             </View>
-            <View style={styles.row}>
+            <Text>PRINT</Text>
+            <View style={style.button}>
                 <TouchableNativeFeedback
                     onPress={() => navigation.navigate('Face')}>
-                    <View style={styles.customButton}>
-                        <Image
-                            source={require('../assets/Face.png')}
-                            resizeMode="contain"
-                        />
-                    </View>
+                    <Image
+                        source={require('../assets/Face.png')}
+                        resizeMode="contain"
+                    />
                 </TouchableNativeFeedback>
             </View>
-            <View style={styles.row}>
+            <Text>FACE</Text>
+            <View style={style.button}>
                 <TouchableNativeFeedback
                     onPress={() => navigation.navigate('Ocr')}>
-                    <View style={styles.customButton}>
-                        <Image
-                            source={require('../assets/Ocr.png')}
-                            resizeMode="contain"
-                        />
-                    </View>
+                    <Image
+                        source={require('../assets/Ocr.png')}
+                        resizeMode="contain"
+                    />
                 </TouchableNativeFeedback>
             </View>
+            <Text>OCR</Text>
         </View>
     )
 }
@@ -69,7 +53,6 @@ const styles = StyleSheet.create({
     home: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
     },
     button: {
         paddingBottom: 16,
@@ -79,15 +62,5 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         margin: 12,
-    },
-    customButton: {
-        flex: 0.8,
-        height: 150,
-        padding: 12,
-        borderRadius: 3,
-        shadowColor: '#000',
-        elevation: 5,
-        alignItems: 'center',
-        backgroundColor: '#369',
     },
 })

@@ -5,6 +5,7 @@ import {
     StyleSheet,
     FlatList,
     TouchableNativeFeedback,
+    Dimensions,
 } from 'react-native'
 import style from '../styles/style'
 
@@ -93,13 +94,18 @@ const Item = ({item, onPress}) => (
 
 const Separator = () => <View style={styles.separator} />
 
-export default function SelectScreen() {
+export default function SelectScreen({navigation}) {
+    const height = Math.ceil(Dimensions.get('window').height) - 230
+    const view__list = {
+        margin: 12,
+        height: height,
+    }
     return (
         <View style={styles.pdt_20}>
             <View style={style.row_center}>
                 <Text style={styles.fontSize}>为您找到以下可以打印病案：</Text>
             </View>
-            <View style={styles.view__list}>
+            <View style={view__list}>
                 <FlatList
                     data={DATA}
                     renderItem={Item}
@@ -107,7 +113,8 @@ export default function SelectScreen() {
                 />
             </View>
             <View>
-                <TouchableNativeFeedback>
+                <TouchableNativeFeedback
+                    onPress={() => navigation.navigate('Purchase')}>
                     <View style={[style.row_center, style.button]}>
                         <Text style={style.button__text}>下一步</Text>
                     </View>
@@ -128,10 +135,7 @@ const styles = StyleSheet.create({
     fontSize: {
         fontSize: 20,
     },
-    view__list: {
-        margin: 12,
-        height: 500,
-    },
+
     view__list__item: {
         flexDirection: 'row',
     },
