@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     view__list__item__idx: {
-        backgroundColor: '#369',
+        backgroundColor: 'red',
         width: 80,
         height: 80,
         borderRadius: 8,
