@@ -12,9 +12,12 @@ export default StyleSheet.create({
         fontSize: 20,
     },
     button: {
-        backgroundColor: 'red',
+        backgroundColor: '#3F51B5',
         borderRadius: 3,
         margin: 12,
+        padding: 12,
+    },
+    button_container: {
         padding: 12,
     },
     button__text: {

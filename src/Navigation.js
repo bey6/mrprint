@@ -48,7 +48,7 @@ export default function Navigation() {
                     name="Purchase"
                     component={PurchaseScreen}
                     options={{
-                        title: '选择支付方式',
+                        title: '费用结算',
                     }}
                 />
                 <Stack.Screen

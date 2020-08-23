@@ -2,12 +2,12 @@ import React from 'react'
 import {
     View,
     Image,
-    Text,
     TextInput,
     StyleSheet,
     TouchableNativeFeedback,
     Dimensions,
 } from 'react-native'
+import {Button, Container, Text} from 'native-base'
 import styles from '../styles/style'
 
 import ImagePicker from 'react-native-image-picker'
@@ -15,13 +15,13 @@ import ImagePicker from 'react-native-image-picker'
 export default function ApplyScreen({navigation}) {
     const [value, onChangeText] = React.useState('')
     const [face, onChangeFaceImg] = React.useState(
-        require('../assets/身份证正面.png')
+        require('../assets/upload.png')
     )
     const [emblem, onChangeEmblemImg] = React.useState(
-        require('../assets/身份证国徽面.png')
+        require('../assets/upload.png')
     )
     const [person, onChangePersonImg] = React.useState(
-        require('../assets/手持身份证.png')
+        require('../assets/upload.png')
     )
 
     const height = Math.ceil(Dimensions.get('window').height) - 160
@@ -30,19 +30,19 @@ export default function ApplyScreen({navigation}) {
     }
 
     return (
-        <View style={localStyles.page}>
+        <Container style={localStyles.page}>
             <View style={page_height}>
                 <View style={localStyles.inlineTextImage}>
-                    <Text style={styles.Text}>姓名</Text>
                     <TextInput
+                        placeholder="姓名"
                         style={styles.TextInput}
                         value={value}
                         onChangeText={(t) => onChangeText(t)}
                     />
                 </View>
                 <View style={localStyles.inlineTextImage}>
-                    <Text style={styles.Text}>身份证号</Text>
                     <TextInput
+                        placeholder="身份证号"
                         style={styles.TextInput}
                         keyboardType="numeric"
                     />
@@ -81,14 +81,13 @@ export default function ApplyScreen({navigation}) {
                     </TouchableNativeFeedback>
                 </View>
             </View>
-            <View>
-                <TouchableNativeFeedback onPress={() => onPress(navigation)}>
-                    <View style={[styles.row_center, styles.button]}>
-                        <Text style={styles.button__text}>下一步</Text>
-                    </View>
-                </TouchableNativeFeedback>
+
+            <View style={styles.button_container}>
+                <Button onPress={() => onPress(navigation)} full>
+                    <Text style={styles.button__text}>下一步</Text>
+                </Button>
             </View>
-        </View>
+        </Container>
     )
 }
 
@@ -99,11 +98,6 @@ const localStyles = StyleSheet.create({
     },
     buttonView: {
         padding: 12,
-        // borderRadius: 3,
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // backgroundColor: '#369',
-        // shadowColor: '#ddd',
     },
     button: {
         margin: 12,

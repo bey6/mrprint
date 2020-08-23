@@ -1,66 +1,56 @@
 import React from 'react'
-import {
-    View,
-    Text,
-    Image,
-    StyleSheet,
-    TouchableNativeFeedback,
-} from 'react-native'
-import style from '../styles/style'
+import {Text, TouchableNativeFeedback} from 'react-native'
+import {Container, Right, List, Left, Icon, ListItem} from 'native-base'
+
 export default function HomeScreen({navigation}) {
-    const title = {
-        fontSize: 50,
-        margin: 30,
-    }
     return (
-        <View style={styles.home}>
-            <Text style={title}>DEMO LIST</Text>
-            <View style={style.button}>
+        <Container>
+            <List>
                 <TouchableNativeFeedback
                     onPress={() => navigation.navigate('Apply')}>
-                    <Image
-                        source={require('../assets/Printer.png')}
-                        resizeMode="contain"
-                    />
+                    <ListItem selected>
+                        <Left>
+                            <Text>病案打印</Text>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </ListItem>
                 </TouchableNativeFeedback>
-            </View>
-            <Text>PRINT</Text>
-            <View style={style.button}>
                 <TouchableNativeFeedback
                     onPress={() => navigation.navigate('Face')}>
-                    <Image
-                        source={require('../assets/Face.png')}
-                        resizeMode="contain"
-                    />
+                    <ListItem selected>
+                        <Left>
+                            <Text>人像比对</Text>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </ListItem>
                 </TouchableNativeFeedback>
-            </View>
-            <Text>FACE</Text>
-            <View style={style.button}>
                 <TouchableNativeFeedback
                     onPress={() => navigation.navigate('Ocr')}>
-                    <Image
-                        source={require('../assets/Ocr.png')}
-                        resizeMode="contain"
-                    />
+                    <ListItem selected>
+                        <Left>
+                            <Text>OCR</Text>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </ListItem>
                 </TouchableNativeFeedback>
-            </View>
-            <Text>OCR</Text>
-        </View>
+                <TouchableNativeFeedback
+                    onPress={() => navigation.navigate('Ocr')}>
+                    <ListItem selected>
+                        <Left>
+                            <Text>OCR</Text>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </ListItem>
+                </TouchableNativeFeedback>
+            </List>
+        </Container>
     )
 }
-
-const styles = StyleSheet.create({
-    home: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    button: {
-        paddingBottom: 16,
-        height: 80,
-        width: 80,
-    },
-    row: {
-        flexDirection: 'row',
-        margin: 12,
-    },
-})
