@@ -268,6 +268,15 @@
     "@babel/helper-create-class-features-plugin" "^7.10.4"
     "@babel/helper-plugin-utils" "^7.10.4"
 
+"@babel/plugin-proposal-decorators@^7.10.5":
+  version "7.10.5"
+  resolved "https://registry.npm.taobao.org/@babel/plugin-proposal-decorators/download/@babel/plugin-proposal-decorators-7.10.5.tgz?cache=0&sync_timestamp=1594749164662&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fplugin-proposal-decorators%2Fdownload%2F%40babel%2Fplugin-proposal-decorators-7.10.5.tgz#42898bba478bc4b1ae242a703a953a7ad350ffb4"
+  integrity sha1-QomLukeLxLGuJCpwOpU6etNQ/7Q=
+  dependencies:
+    "@babel/helper-create-class-features-plugin" "^7.10.5"
+    "@babel/helper-plugin-utils" "^7.10.4"
+    "@babel/plugin-syntax-decorators" "^7.10.4"
+
 "@babel/plugin-proposal-export-default-from@^7.0.0":
   version "7.10.4"
   resolved "https://registry.npm.taobao.org/@babel/plugin-proposal-export-default-from/download/@babel/plugin-proposal-export-default-from-7.10.4.tgz#08f66eef0067cbf6a7bc036977dcdccecaf0c6c5"
@@ -328,6 +337,13 @@
   version "7.10.4"
   resolved "https://registry.npm.taobao.org/@babel/plugin-syntax-class-properties/download/@babel/plugin-syntax-class-properties-7.10.4.tgz?cache=0&sync_timestamp=1593522817483&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fplugin-syntax-class-properties%2Fdownload%2F%40babel%2Fplugin-syntax-class-properties-7.10.4.tgz#6644e6a0baa55a61f9e3231f6c9eeb6ee46c124c"
   integrity sha1-ZkTmoLqlWmH54yMfbJ7rbuRsEkw=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.10.4"
+
+"@babel/plugin-syntax-decorators@^7.10.4":
+  version "7.10.4"
+  resolved "https://registry.npm.taobao.org/@babel/plugin-syntax-decorators/download/@babel/plugin-syntax-decorators-7.10.4.tgz?cache=0&sync_timestamp=1593521120720&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fplugin-syntax-decorators%2Fdownload%2F%40babel%2Fplugin-syntax-decorators-7.10.4.tgz#6853085b2c429f9d322d02f5a635018cdeb2360c"
+  integrity sha1-aFMIWyxCn50yLQL1pjUBjN6yNgw=
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
@@ -1014,6 +1030,11 @@
     "@types/node" "*"
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
+
+"@react-native-community/checkbox@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.npm.taobao.org/@react-native-community/checkbox/download/@react-native-community/checkbox-0.5.0.tgz#28e30dbcfb54ce2aaaa70d16da6b0d5e50eb14aa"
+  integrity sha1-KOMNvPtUziqqpw0W2msNXlDrFKo=
 
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
@@ -5049,6 +5070,23 @@ mkdirp@^0.5.1:
   integrity sha1-2Rzv1i0UNsoPQWIOJRKI1CAJne8=
   dependencies:
     minimist "^1.2.5"
+
+mobx-react-lite@>=2.0.6:
+  version "2.0.7"
+  resolved "https://registry.npm.taobao.org/mobx-react-lite/download/mobx-react-lite-2.0.7.tgz#1bfb3b4272668e288047cf0c7940b14e91cba284"
+  integrity sha1-G/s7QnJmjiiAR88MeUCxTpHLooQ=
+
+mobx-react@^6.2.5:
+  version "6.2.5"
+  resolved "https://registry.npm.taobao.org/mobx-react/download/mobx-react-6.2.5.tgz?cache=0&sync_timestamp=1595990790682&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmobx-react%2Fdownload%2Fmobx-react-6.2.5.tgz#9020a17b79cc6dc3d124ad89ab36eb9ea540a45b"
+  integrity sha1-kCChe3nMbcPRJK2JqzbrnqVApFs=
+  dependencies:
+    mobx-react-lite ">=2.0.6"
+
+mobx@^5.15.6:
+  version "5.15.6"
+  resolved "https://registry.npm.taobao.org/mobx/download/mobx-5.15.6.tgz#24750af56f87bcf9c3cf82ece4c79eb91bb71968"
+  integrity sha1-JHUK9W+HvPnDz4Ls5MeeuRu3GWg=
 
 ms@2.0.0:
   version "2.0.0"

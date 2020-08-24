@@ -11,6 +11,7 @@ import SelectScreen from './pages/Select'
 import FaceScreen from './pages/Face'
 import OcrScreen from './pages/Ocr'
 import PurchaseScreen from './pages/Purchase'
+import ResultScreen from './pages/Result'
 
 const Stack = createStackNavigator()
 
@@ -49,6 +50,13 @@ export default function Navigation() {
                     component={PurchaseScreen}
                     options={{
                         title: '费用结算',
+                    }}
+                />
+                <Stack.Screen
+                    name="Result"
+                    component={ResultScreen}
+                    options={{
+                        title: '支付成功',
                     }}
                 />
                 <Stack.Screen

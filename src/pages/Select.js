@@ -6,56 +6,12 @@ import {
     TouchableNativeFeedback,
     Dimensions,
 } from 'react-native'
-import {Button, Text, CheckBox} from 'native-base'
+import CheckBox from '@react-native-community/checkbox'
+import {Button, Text} from 'native-base'
 import style from '../styles/style'
 
-const DATA = [
-    {
-        id: '1',
-        mrid: '2020082',
-        name: '马斯',
-        indate: '2020-01-30',
-    },
-    {
-        id: '2',
-        mrid: '2020832',
-        name: '关协',
-        indate: '2020-05-01',
-    },
-    {
-        id: '3',
-        mrid: '2020103',
-        name: '康熙',
-        indate: '2020-08-14',
-    },
-    {
-        id: '4',
-        mrid: '2020103',
-        name: '康熙',
-        indate: '2020-08-14',
-    },
-    {
-        id: '5',
-        mrid: '2020103',
-        name: '康熙',
-        indate: '2020-08-14',
-    },
-    {
-        id: '6',
-        mrid: '2020103',
-        name: '康熙',
-        indate: '2020-08-14',
-    },
-    {
-        id: '7',
-        mrid: '2020103',
-        name: '康熙',
-        indate: '2020-08-14',
-    },
-]
-
 const Item = ({item, onPress}) => (
-    <TouchableNativeFeedback onPress={onPress}>
+    <TouchableNativeFeedback onPress={() => onPress(item)}>
         <View style={styles.view__list__item}>
             <View style={styles.view__list__item__idx}>
                 <Text style={styles.view__list__item__idx__text}>
@@ -112,9 +68,9 @@ const Item = ({item, onPress}) => (
                     </Text>
                 </View>
             </View>
-            {/* <View>
+            <View style={{justifyContent: 'center'}}>
                 <CheckBox checked={item.checked} />
-            </View> */}
+            </View>
         </View>
     </TouchableNativeFeedback>
 )
@@ -127,6 +83,65 @@ export default function SelectScreen({navigation}) {
         margin: 12,
         height: height,
     }
+    const [DATA, onDataChange] = React.useState([
+        {
+            id: '1',
+            mrid: '2020082',
+            name: '马斯',
+            indate: '2020-01-30',
+            checked: false,
+        },
+        {
+            id: '2',
+            mrid: '2020832',
+            name: '关协',
+            indate: '2020-05-01',
+            checked: false,
+        },
+        {
+            id: '3',
+            mrid: '2020103',
+            name: '康熙',
+            indate: '2020-08-14',
+            checked: false,
+        },
+        {
+            id: '4',
+            mrid: '2020138',
+            name: '庚含文',
+            indate: '2020-01-30',
+            checked: false,
+        },
+        {
+            id: '5',
+            mrid: '2020831',
+            name: '永清婉',
+            indate: '2020-07-10',
+            checked: false,
+        },
+        {
+            id: '6',
+            mrid: '2020981',
+            name: '荤兰娜',
+            indate: '2020-03-24',
+            checked: false,
+        },
+        {
+            id: '7',
+            mrid: '2020582',
+            name: '巧欣笑',
+            indate: '2020-08-24',
+            checked: false,
+        },
+    ])
+
+    function onPress(e) {
+        let list = JSON.parse(JSON.stringify(DATA))
+        let obj = list.find((d) => d.id === e.id)
+        obj.checked = !obj.checked
+        onDataChange(list)
+    }
+
     return (
         <View style={styles.pdt_20}>
             <View style={style.row_center}>
@@ -135,7 +150,9 @@ export default function SelectScreen({navigation}) {
             <View style={view__list}>
                 <FlatList
                     data={DATA}
-                    renderItem={Item}
+                    renderItem={({item}) =>
+                        Item({item: item, onPress: onPress})
+                    }
                     ItemSeparatorComponent={Separator}
                 />
             </View>

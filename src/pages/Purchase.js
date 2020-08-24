@@ -101,7 +101,7 @@ export default function Purchase({navigation}) {
             </View>
 
             <View style={style.button_container}>
-                <Button onPress={() => navigation.navigate('Purchase')} full>
+                <Button onPress={() => navigation.navigate('Result')} full>
                     <Text style={style.button__text}>确认支付</Text>
                 </Button>
             </View>

@@ -1,10 +1,19 @@
 import React from 'react'
-import {Text, TouchableNativeFeedback} from 'react-native'
+import {
+    View,
+    Text,
+    Image,
+    TouchableNativeFeedback,
+    StyleSheet,
+} from 'react-native'
 import {Container, Right, List, Left, Icon, ListItem} from 'native-base'
 
 export default function HomeScreen({navigation}) {
     return (
         <Container>
+            <View style={style.logo_area}>
+                <Image source={require('../assets/logo.png')} />
+            </View>
             <List>
                 <TouchableNativeFeedback
                     onPress={() => navigation.navigate('Apply')}>
@@ -54,3 +63,11 @@ export default function HomeScreen({navigation}) {
         </Container>
     )
 }
+
+const style = StyleSheet.create({
+    logo_area: {
+        backgroundColor: '#3F51B5',
+        alignItems: 'center',
+        padding: 40,
+    },
+})
