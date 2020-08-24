@@ -81,3 +81,7 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 ## app:installDebug 报错问题
 
 通常是手机没有正常连接导致的，可以尝试确保连接正常后，删掉已有的测试应用后再次启动。
+
+## Android 打包 APK
+
+(RN 中文网)[https://reactnative.cn/docs/signed-apk-android]
