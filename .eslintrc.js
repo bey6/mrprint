@@ -5,4 +5,9 @@ module.exports = {
     rules: {
         'prettier/prettier': 'error',
     },
+    parserOptions: {
+        ecmaFeatures: {
+            legacyDecorators: true,
+        },
+    },
 }

@@ -102,10 +102,26 @@ MobX 4 个装饰器：
 -   @inject 标签则用于在组件类中注入 Store 对象，以便组件从 state 中获取 Store 对象数据
 
 ```bash
-npm i mobx --save
-npm i mobx-react --save
+yarn add mobx --save-dev
+yarn add mobx-react --save-dev
 # 装饰器需要用到 babel
-npm i @babel/plugin-proposal-decorators --save-dev
+yarn add @babel/plugin-proposal-decorators --save-dev
+```
+
+### 装饰器报错问题
+
+#### Parsing error: Using the export keyword between a decorator and a class is not allowed. Please use `export @dec class` instead.
+
+> [babel-eslint/issues#662](https://github.com/babel/babel-eslint/issues/662)
+
+大概就是在 .eslintrc.js 中，添加如下段落：
+
+```js
+parserOptions: {
+    ecmaFeatures: {
+        legacyDecorators: true,
+    },
+},
 ```
 
 ## Android 打包 APK
