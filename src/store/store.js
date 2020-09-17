@@ -41,6 +41,9 @@ class AppStore {
     @action setMrlist(newList) {
         this.mrlist = newList
     }
+    @action setName(value) {
+        this.name = value
+    }
 }
 
 export default new RootStore()
