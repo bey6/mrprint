@@ -111,3 +111,11 @@ npm i @babel/plugin-proposal-decorators --save-dev
 ## Android 打包 APK
 
 (RN 中文网)[https://reactnative.cn/docs/signed-apk-android]
+
+## 微信支付集成方式
+
+1. 在[微信开发者平台](https://open.weixin.qq.com/) > 管理中心 > 移动应用，创建移动应用
+2. 在[微信开发者平台](https://open.weixin.qq.com/) > 账户中心 > 开发者资质认证，申请成为开发者（需要 300 元）
+3. 在[微信商户平台](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F)注册成为微信商户
+4. 在[微信商户平台](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F)申请开通支付接口
+5. 在[微信商户平台](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F) > 产品中心，绑定 APP
