@@ -49,10 +49,21 @@ export default function HomeScreen({navigation}) {
                     </ListItem>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback
-                    onPress={() => navigation.navigate('Ocr')}>
+                    onPress={() => navigation.navigate('Mobx')}>
                     <ListItem selected>
                         <Left>
-                            <Text>OCR</Text>
+                            <Text>Mobx</Text>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </ListItem>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback
+                    onPress={() => navigation.navigate('MobxModifier')}>
+                    <ListItem selected>
+                        <Left>
+                            <Text>MobxModifier</Text>
                         </Left>
                         <Right>
                             <Icon name="arrow-forward" />

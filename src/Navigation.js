@@ -12,6 +12,8 @@ import FaceScreen from './pages/Face'
 import OcrScreen from './pages/Ocr'
 import PurchaseScreen from './pages/Purchase'
 import ResultScreen from './pages/Result'
+import MobxScreen from './pages/Mobx'
+import MobxModifierScreen from './pages/MobxModifier'
 
 const Stack = createStackNavigator()
 
@@ -71,6 +73,20 @@ export default function Navigation() {
                     component={OcrScreen}
                     options={{
                         title: 'OCR 识别',
+                    }}
+                />
+                <Stack.Screen
+                    name="Mobx"
+                    component={MobxScreen}
+                    options={{
+                        title: 'Mobx 测试',
+                    }}
+                />
+                <Stack.Screen
+                    name="MobxModifier"
+                    component={MobxModifierScreen}
+                    options={{
+                        title: 'MobxModifier',
                     }}
                 />
             </Stack.Navigator>
