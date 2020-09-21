@@ -7,8 +7,9 @@ import {
     Dimensions,
 } from 'react-native'
 import CheckBox from '@react-native-community/checkbox'
-import {Button, Text} from 'native-base'
+import {Container, Content, ListItem, Text, Body, Button} from 'native-base'
 import style from '../styles/style'
+import store from '../store/store'
 
 const Item = ({item, onPress}) => (
     <TouchableNativeFeedback onPress={() => onPress(item)}>
@@ -77,93 +78,73 @@ const Item = ({item, onPress}) => (
 
 const Separator = () => <View style={styles.separator} />
 
-export default function SelectScreen({navigation}) {
-    const height = Math.ceil(Dimensions.get('window').height) - 230
-    const view__list = {
-        margin: 12,
-        height: height,
-    }
-    const [DATA, onDataChange] = React.useState([
-        {
-            id: '1',
-            mrid: '2020082',
-            name: '马斯',
-            indate: '2020-01-30',
-            checked: false,
-        },
-        {
-            id: '2',
-            mrid: '2020832',
-            name: '关协',
-            indate: '2020-05-01',
-            checked: false,
-        },
-        {
-            id: '3',
-            mrid: '2020103',
-            name: '康熙',
-            indate: '2020-08-14',
-            checked: false,
-        },
-        {
-            id: '4',
-            mrid: '2020138',
-            name: '庚含文',
-            indate: '2020-01-30',
-            checked: false,
-        },
-        {
-            id: '5',
-            mrid: '2020831',
-            name: '永清婉',
-            indate: '2020-07-10',
-            checked: false,
-        },
-        {
-            id: '6',
-            mrid: '2020981',
-            name: '荤兰娜',
-            indate: '2020-03-24',
-            checked: false,
-        },
-        {
-            id: '7',
-            mrid: '2020582',
-            name: '巧欣笑',
-            indate: '2020-08-24',
-            checked: false,
-        },
-    ])
+class SelectScreen extends React.Component {
+    render() {
+        const {navigation} = this.props
+        const height = Math.ceil(Dimensions.get('window').height) - 230
+        const view__list = {
+            margin: 12,
+            height: height,
+        }
 
-    function onPress(e) {
-        let list = JSON.parse(JSON.stringify(DATA))
-        let obj = list.find((d) => d.id === e.id)
-        obj.checked = !obj.checked
-        onDataChange(list)
-    }
+        function onPress(e) {
+            let list = JSON.parse(JSON.stringify(store.appStore.mrlist))
+            let obj = list.find((d) => d.id === e.id)
+            obj.checked = !obj.checked
+        }
 
-    return (
-        <View style={styles.pdt_20}>
-            <View style={style.row_center}>
-                <Text style={styles.fontSize}>为您找到以下可以打印病案：</Text>
-            </View>
-            <View style={view__list}>
-                <FlatList
-                    data={DATA}
-                    renderItem={({item}) =>
-                        Item({item: item, onPress: onPress})
-                    }
-                    ItemSeparatorComponent={Separator}
-                />
-            </View>
-            <View style={style.button_container}>
-                <Button onPress={() => navigation.navigate('Purchase')} full>
-                    <Text style={style.button__text}>下一步</Text>
-                </Button>
-            </View>
-        </View>
-    )
+        return (
+            <Container>
+                <Content>
+                    {store.appStore.mrlist
+                        .sort((x, y) => x.indate.localeCompare(y.indate))
+                        .map((item, idx) => (
+                            <ListItem>
+                                <Body>
+                                    <Text>
+                                        {idx + 1}. {item.indate} -{' '}
+                                        {item.diagnosis}
+                                    </Text>
+                                </Body>
+                                <CheckBox checked={true} />
+                            </ListItem>
+                        ))}
+                    <Button
+                        full
+                        style={style.button}
+                        onPress={() => navigation.navigate('Purchase')}>
+                        <Text style={style.button__text}>下一步</Text>
+                    </Button>
+                </Content>
+            </Container>
+            // <View style={styles.pdt_20}>
+            //     <View style={style.row_center}>
+            //         <Text style={styles.fontSize}>
+            //             为您找到以下可以打印病案：
+            //         </Text>
+            //     </View>
+            //     <View style={view__list}>
+            //         <FlatList
+            //             data={store.appStore.mrlist}
+            //             renderItem={({item}) =>
+            //                 Item({item: item, onPress: onPress})
+            //             }
+            //             ItemSeparatorComponent={Separator}
+            //         />
+            //     </View>
+            //     <View style={style.button_container}>
+            //         <Button
+            //             onPress={() => navigation.navigate('Purchase')}
+            //             full>
+            //             <Text style={style.button__text}>下一步</Text>
+            //         </Button>
+            //     </View>
+            // </View>
+        )
+    }
 }
+
+export default SelectScreen
 
 const styles = StyleSheet.create({
     row: {
