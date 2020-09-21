@@ -128,10 +128,53 @@ parserOptions: {
 
 (RN 中文网)[https://reactnative.cn/docs/signed-apk-android]
 
-## 微信支付集成方式
+## 微信支付认证
 
 1. 在[微信开发者平台](https://open.weixin.qq.com/) > 管理中心 > 移动应用，创建移动应用
 2. 在[微信开发者平台](https://open.weixin.qq.com/) > 账户中心 > 开发者资质认证，申请成为开发者（需要 300 元）
 3. 在[微信商户平台](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F)注册成为微信商户
 4. 在[微信商户平台](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F)申请开通支付接口
 5. 在[微信商户平台](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F) > 产品中心，绑定 APP
+
+## 微信支付集成
+
+1. 添加 gradle 依赖
+
+打开 build.gradle 文件，在 dependencies 中添加依赖：
+
+```bash
+dependencies {
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+}
+```
+
+应用包名：是在 APP 项目配置文件 AndroidManifest.xml 中声明的 package 值，例如 DEMO 中的 package="net.sourceforge.simcpux"。
+
+本应用包名：`com.mrprint`
+
+应用签名：根据项目的应用包名和编译使用的 keystore，可由签名工具生成一个 32 位的 md5 串，在调试的手机上安装签名工具后，运行可生成应用签名串，如图 8.9 所示，绿色串即应用签名。签名工具下载地址https://open.weixin.qq.com/zh_CN/htmledition/res/dev/download/sdk/Gen_Signature_Android.apk
+
+## Bmob
+
+## > Task :app:installDebug FAILED
+
+```bash
+> Task :app:installDebug FAILED
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/6.2/userguide/command_line_interface.html#sec:command_line_warnings
+161 actionable tasks: 2 executed, 159 up-to-date
+Unable to install D:\Projects\mrprint\android\app\build\outputs\apk\debug\app-debug.apk
+com.android.ddmlib.InstallException: INSTALL_FAILED_UPDATE_INCOMPATIBLE: Package com.mrprint signatures do not match previously installed version; ignoring!
+```
+
+解决方案：`卸载手机上已经安装过的本应用`
+
+一般遇到这种问题都是因为之前手机上安装的版本与目前要运行的版本有冲突导致的。
+
+## ReferenceError: Can't find variable: localStorage
+
+```bash
+npm i localStorage
+```

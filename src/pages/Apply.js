@@ -7,9 +7,9 @@ import {
     TouchableNativeFeedback,
     Dimensions,
 } from 'react-native'
-import {Button, Container, Text} from 'native-base'
+import {Button, Container, Text, Content, Item, Input, Icon} from 'native-base'
 import styles from '../styles/style'
-
+import store from '../store/store.js'
 import ImagePicker from 'react-native-image-picker'
 
 export default function ApplyScreen({navigation}) {
@@ -39,6 +39,18 @@ export default function ApplyScreen({navigation}) {
                         value={value}
                         onChangeText={(t) => onChangeText(t)}
                     />
+                    <Content>
+                        <Item>
+                            <Icon active name="user" />
+                            <Input
+                                placeholder="Icon Textbox"
+                                value={store.appStore.name}
+                                onChangeText={(text) =>
+                                    store.appStore.setName(text)
+                                }
+                            />
+                        </Item>
+                    </Content>
                 </View>
                 <View style={localStyles.inlineTextImage}>
                     <TextInput
