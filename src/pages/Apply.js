@@ -9,11 +9,11 @@ import {
 } from 'react-native'
 import {Button, Container, Text, Content, Item, Input, Icon} from 'native-base'
 import styles from '../styles/style'
-import store from '../store/store.js'
 import ImagePicker from 'react-native-image-picker'
+import store from '../store/store.js'
+import {observable} from 'mobx'
 
-export default function ApplyScreen({navigation}) {
-    const [value, onChangeText] = React.useState('')
+function ApplyScreen({navigation}) {
     const [face, onChangeFaceImg] = React.useState(
         require('../assets/upload.png')
     )
@@ -23,25 +23,58 @@ export default function ApplyScreen({navigation}) {
     const [person, onChangePersonImg] = React.useState(
         require('../assets/upload.png')
     )
-
     const height = Math.ceil(Dimensions.get('window').height) - 160
-    const page_height = {
-        height: height,
-    }
+    const page_height = {height}
+    const localStyles = StyleSheet.create({
+        page: {
+            backgroundColor: '#fafafa',
+            position: 'relative',
+        },
+        buttonView: {
+            padding: 12,
+        },
+        button: {
+            margin: 12,
+            height: 30,
+        },
+        photo: {
+            borderRadius: 5,
+            width: 256,
+            height: 128,
+        },
+        inlineTextImage: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            margin: 12,
+        },
+    })
 
     return (
         <Container style={localStyles.page}>
             <View style={page_height}>
-                <View style={localStyles.inlineTextImage}>
+                {/* <View style={localStyles.inlineTextImage}>
                     <TextInput
                         placeholder="姓名"
                         style={styles.TextInput}
                         value={value}
                         onChangeText={(t) => onChangeText(t)}
                     />
+                </View> */}
+                <Container>
                     <Content>
                         <Item>
-                            <Icon active name="user" />
+                            <Icon active name="home" />
+                            <Input
+                                placeholder="Icon Textbox"
+                                value={store.appStore.name}
+                                onChangeText={(text) =>
+                                    store.appStore.setName(text)
+                                }
+                            />
+                        </Item>
+                        <Item>
+                            <Icon active name="home" />
                             <Input
                                 placeholder="Icon Textbox"
                                 value={store.appStore.name}
@@ -51,14 +84,14 @@ export default function ApplyScreen({navigation}) {
                             />
                         </Item>
                     </Content>
-                </View>
-                <View style={localStyles.inlineTextImage}>
+                </Container>
+                {/* <View style={localStyles.inlineTextImage}>
                     <TextInput
                         placeholder="身份证号"
                         style={styles.TextInput}
                         keyboardType="numeric"
                     />
-                </View>
+                </View> */}
                 <View style={localStyles.inlineTextImage}>
                     <Text style={styles.Text}>身份证人像面</Text>
                     <TouchableNativeFeedback
@@ -103,31 +136,6 @@ export default function ApplyScreen({navigation}) {
     )
 }
 
-const localStyles = StyleSheet.create({
-    page: {
-        backgroundColor: '#fafafa',
-        position: 'relative',
-    },
-    buttonView: {
-        padding: 12,
-    },
-    button: {
-        margin: 12,
-        height: 30,
-    },
-    photo: {
-        borderRadius: 5,
-        width: 256,
-        height: 128,
-    },
-    inlineTextImage: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin: 12,
-    },
-})
-
 function onPress(navigation) {
     navigation.navigate('Select')
 }
@@ -163,3 +171,5 @@ function getPicture(setState) {
         }
     )
 }
+
+export default ApplyScreen
