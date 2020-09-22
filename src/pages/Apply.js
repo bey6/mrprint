@@ -138,7 +138,10 @@ class ApplyScreen extends React.Component {
                         </TouchableNativeFeedback>
                     </View>
 
-                    <Button full onPress={() => this.onPress(navigation)}>
+                    <Button
+                        full
+                        onPress={() => this.onPress(navigation)}
+                        style={styles.button}>
                         <Text style={styles.button__text}>下一步</Text>
                     </Button>
                 </Content>

@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx'
+import {observable, action, computed} from 'mobx'
 
 class RootStore {
     constructor() {
@@ -15,7 +15,7 @@ class AppStore {
     @observable mrid = '2020091'
     @observable mrlist = [
         {
-            id: '1',
+            key: '1',
             mrid: '2020082',
             name: '张三',
             indate: '2020-01-30',
@@ -23,7 +23,7 @@ class AppStore {
             checked: false,
         },
         {
-            id: '2',
+            key: '2',
             mrid: '2020832',
             name: '张三',
             indate: '2020-05-01',
@@ -31,7 +31,7 @@ class AppStore {
             checked: false,
         },
         {
-            id: '3',
+            key: '3',
             mrid: '2020103',
             name: '张三',
             indate: '2020-08-14',
@@ -39,7 +39,7 @@ class AppStore {
             checked: false,
         },
         {
-            id: '4',
+            key: '4',
             mrid: '2020138',
             name: '张三',
             indate: '2020-01-30',
@@ -47,7 +47,7 @@ class AppStore {
             checked: false,
         },
         {
-            id: '5',
+            key: '5',
             mrid: '2020831',
             name: '张三',
             indate: '2020-07-10',
@@ -55,7 +55,7 @@ class AppStore {
             checked: false,
         },
         {
-            id: '6',
+            key: '6',
             mrid: '2020981',
             name: '张三',
             indate: '2020-03-24',
@@ -63,7 +63,7 @@ class AppStore {
             checked: false,
         },
         {
-            id: '7',
+            key: '7',
             mrid: '2020582',
             name: '张三',
             indate: '2020-08-24',
@@ -71,6 +71,15 @@ class AppStore {
             checked: false,
         },
     ]
+
+    @computed get sortedMrList() {
+        return this.mrlist
+            .slice()
+            .sort((x, y) => x.indate.localeCompare(y.indate))
+    }
+    @computed get selectedMr() {
+        return this.mrlist.filter((mr) => mr.checked)
+    }
 
     @action setMrlist(newList) {
         this.mrlist = newList
