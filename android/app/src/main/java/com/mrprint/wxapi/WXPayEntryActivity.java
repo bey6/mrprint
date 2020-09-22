@@ -14,7 +14,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-
+// 处理微信支付回调
 public class WxPayEntryActivity extends Activity implements IWXAPIEventHandler {
     private static final String TAG = "WxPayEntryActivity";
     private IWXAPI api;
@@ -33,10 +33,20 @@ public class WxPayEntryActivity extends Activity implements IWXAPIEventHandler {
         api.handleIntent(intent, this);
     }
 
+    /**
+     * 请求时
+     * 
+     * @param req
+     */
     @Override
     public void onReq(BaseReq req) {
     }
 
+    /**
+     * 相应时
+     * 
+     * @param resp
+     */
     @Override
     public void onResp(BaseResp resp) {
         Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);

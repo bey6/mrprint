@@ -2,6 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, Image} from 'react-native'
 import {Button, List, ListItem, Left, Body} from 'native-base'
 import style from '../styles/style'
+import wxpay from '../sdk/wxpay'
 
 export default function Purchase({navigation}) {
     const alipay = require('../assets/alipay.png')
@@ -101,12 +102,23 @@ export default function Purchase({navigation}) {
             </View>
 
             <View style={style.button_container}>
-                <Button onPress={() => navigation.navigate('Result')} full>
+                <Button onPress={() => doPurchase(navigation)} full>
                     <Text style={style.button__text}>确认支付</Text>
                 </Button>
             </View>
         </View>
     )
+}
+
+function doPurchase(navigation) {
+    console.log(wxpay)
+    wxpay.isSupported().then((isSupported) => {
+        if (isSupported) {
+            console.log('??')
+            // wxpay.pay()
+        }
+    })
+    // navigation.navigate('Result')
 }
 
 const pageStyle = StyleSheet.create({

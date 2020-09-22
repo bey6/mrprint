@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 微信支付包
+ */
 public class WxPayPackage implements ReactPackage {
 
     @Override
@@ -22,5 +25,4 @@ public class WxPayPackage implements ReactPackage {
         modules.add(new WxPayModule(reactContext));
         return modules;
     }
-
 }
