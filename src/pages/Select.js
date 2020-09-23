@@ -23,6 +23,7 @@ class SelectScreen extends React.Component {
         let idx = newArr.findIndex((mr) => mr.key === item.key)
         if (idx !== -1) {
             newArr[idx].checked = !newArr[idx].checked
+            newArr.splice(idx, 1)
             store.appStore.setMrlist(newArr)
         }
     }

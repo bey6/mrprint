@@ -6,7 +6,16 @@ import {
     TouchableNativeFeedback,
     Dimensions,
 } from 'react-native'
-import {Button, Container, Text, Content, Item, Input, Icon} from 'native-base'
+import {
+    Button,
+    Container,
+    Text,
+    Content,
+    Item,
+    Form,
+    Input,
+    Label,
+} from 'native-base'
 import styles from '../styles/style'
 import ImagePicker from 'react-native-image-picker'
 import store from '../store/store.js'
@@ -51,6 +60,9 @@ class ApplyScreen extends React.Component {
             }
         )
     }
+    setValue(f, v) {
+        console.log(f, v)
+    }
     render() {
         const {navigation} = this.props
         this.state = {
@@ -86,58 +98,59 @@ class ApplyScreen extends React.Component {
                     height: page_height,
                 }}>
                 <Content>
-                    <Item>
-                        <Icon active name="person" />
-                        <Input
-                            placeholder="Input your name please."
-                            value={store.appStore.name}
-                            onChangeText={(text) =>
-                                store.appStore.setName(text)
-                            }
-                        />
-                    </Item>
-                    <Item>
-                        <Icon active name="card" />
-                        <Input
-                            placeholder="Input your id card please."
-                            value={store.appStore.idno}
-                            onChangeText={(text) =>
-                                store.appStore.setName(text)
-                            }
-                        />
-                    </Item>
+                    <Form>
+                        <Item floatingLabel style={{marginTop: 12}}>
+                            <Label>姓名</Label>
+                            <Input
+                                value={store.appStore.name}
+                                onChange={
+                                    (text) => console.log(text)
+                                    // store.appStore.setValue('name', text)
+                                }
+                            />
+                        </Item>
+                        <Item floatingLabel style={{marginTop: 12}}>
+                            <Label>身份证号码</Label>
+                            <Input
+                                value={store.appStore.idno}
+                                onChangeText={
+                                    (text) => this.setValue('idno', text)
+                                    // store.appStore.setValue('idno', text)
+                                }
+                            />
+                        </Item>
 
-                    <View style={localStyles.inlineTextImage}>
-                        <TouchableNativeFeedback
-                            onPress={() => this.getPicture('face')}>
-                            <Image
-                                style={localStyles.photo}
-                                resizeMode="contain"
-                                source={this.state.face}
-                            />
-                        </TouchableNativeFeedback>
-                    </View>
-                    <View style={localStyles.inlineTextImage}>
-                        <TouchableNativeFeedback
-                            onPress={() => this.getPicture('emblem')}>
-                            <Image
-                                style={localStyles.photo}
-                                resizeMode="contain"
-                                source={this.state.emblem}
-                            />
-                        </TouchableNativeFeedback>
-                    </View>
-                    <View style={localStyles.inlineTextImage}>
-                        <TouchableNativeFeedback
-                            onPress={() => this.getPicture('person')}>
-                            <Image
-                                style={localStyles.photo}
-                                resizeMode="contain"
-                                source={this.state.person}
-                            />
-                        </TouchableNativeFeedback>
-                    </View>
-
+                        <View style={localStyles.inlineTextImage}>
+                            <TouchableNativeFeedback
+                                onPress={() => this.getPicture('face')}>
+                                <Image
+                                    style={localStyles.photo}
+                                    resizeMode="contain"
+                                    source={this.state.face}
+                                />
+                            </TouchableNativeFeedback>
+                        </View>
+                        <View style={localStyles.inlineTextImage}>
+                            <TouchableNativeFeedback
+                                onPress={() => this.getPicture('emblem')}>
+                                <Image
+                                    style={localStyles.photo}
+                                    resizeMode="contain"
+                                    source={this.state.emblem}
+                                />
+                            </TouchableNativeFeedback>
+                        </View>
+                        <View style={localStyles.inlineTextImage}>
+                            <TouchableNativeFeedback
+                                onPress={() => this.getPicture('person')}>
+                                <Image
+                                    style={localStyles.photo}
+                                    resizeMode="contain"
+                                    source={this.state.person}
+                                />
+                            </TouchableNativeFeedback>
+                        </View>
+                    </Form>
                     <Button
                         full
                         onPress={() => this.onPress(navigation)}

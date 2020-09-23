@@ -10,9 +10,9 @@ class RootStore {
 // class ApplyStore {}
 
 class AppStore {
-    @observable name = '张三'
-    @observable idno = '100000200001010011'
-    @observable mrid = '2020091'
+    @observable name = ''
+    @observable idno = ''
+    @observable mrid = ''
     @observable mrlist = [
         {
             key: '1',
@@ -86,6 +86,11 @@ class AppStore {
     }
     @action setName(value) {
         this.name = value
+    }
+    @action.bound
+    setValue(fields, value) {
+        console.log(fields, value)
+        this[fields] = value
     }
 }
 
