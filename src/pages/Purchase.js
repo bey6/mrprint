@@ -114,8 +114,15 @@ function doPurchase(navigation) {
     console.log(wxpay)
     wxpay.isSupported().then((isSupported) => {
         if (isSupported) {
-            console.log('??')
-            // wxpay.pay()
+            wxpay.pay({
+                // appId: order.getString("appid");
+                // partnerId: order.getString("partnerId");
+                // prepayId: order.getString("prepayid");
+                // packageValue: "Sign=WXPay";
+                // nonceStr: order.getString("nonceStr");
+                // timeStamp: order.getInt("timestamp") + "";
+                // sign: order.getString("sign");
+            })
         }
     })
     // navigation.navigate('Result')

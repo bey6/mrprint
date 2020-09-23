@@ -11,7 +11,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class WxPayModule extends ReactContextBaseJavaModule {
     private IWXAPI api;
-    static String APP_ID = "";
+    static String APP_ID = "wxa107cc3f0dc90742";
     static Promise promise = null;
 
     WxPayModule(ReactApplicationContext reactContext) {

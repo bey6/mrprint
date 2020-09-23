@@ -1,5 +1,11 @@
 # MRPRINT
 
+## 配置信息
+
+APPID: wxa107cc3f0dc90742
+商户号码: 1602203076
+支付密码: 883fc22ea84a491fa74756e7ff0c46e7
+
 ## 路由
 
 参考 [React Navigation](https://reactnavigation.org/)
