@@ -184,3 +184,17 @@ com.android.ddmlib.InstallException: INSTALL_FAILED_UPDATE_INCOMPATIBLE: Package
 ```bash
 npm i localStorage
 ```
+
+## Cannot update during an existing state transition (such as within `render`). Render methods should be a pure function of props and state
+
+这个问题其实解决办法非常的令人无奈···就是 render 函数里面不要写多余的代码，应该像下面这样：
+
+```js
+render() {
+    // 这里不要写额外的代码
+    return (
+        // jsx
+    )
+    // 这里也不要写额外的代码
+}
+```

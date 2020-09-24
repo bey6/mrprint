@@ -23,20 +23,15 @@ class SelectScreen extends React.Component {
         let idx = newArr.findIndex((mr) => mr.key === item.key)
         if (idx !== -1) {
             newArr[idx].checked = !newArr[idx].checked
-            newArr.splice(idx, 1)
             store.appStore.setMrlist(newArr)
         }
     }
 
-    onNext(navigation) {
-        // navigation.navigate('Purchase')
-        console.log(store.appStore.selectedMr)
+    onNext() {
+        this.props.navigation.navigate('Purchase')
     }
 
     render() {
-        const {navigation} = this.props
-        // const height = Math.ceil(Dimensions.get('window').height) - 230
-
         return (
             <Container>
                 <Content>
@@ -57,7 +52,7 @@ class SelectScreen extends React.Component {
                     <Button
                         full
                         style={style.button}
-                        onPress={() => this.onNext(navigation)}>
+                        onPress={() => this.onNext()}>
                         <Text style={style.button__text}>下一步</Text>
                     </Button>
                 </Content>

@@ -87,9 +87,7 @@ class AppStore {
     @action setName(value) {
         this.name = value
     }
-    @action.bound
-    setValue(fields, value) {
-        console.log(fields, value)
+    @action setValue(fields, value) {
         this[fields] = value
     }
 }

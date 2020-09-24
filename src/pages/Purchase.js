@@ -111,18 +111,26 @@ export default function Purchase({navigation}) {
 }
 
 function doPurchase(navigation) {
-    console.log(wxpay)
     wxpay.isSupported().then((isSupported) => {
+        console.log(isSupported)
         if (isSupported) {
-            wxpay.pay({
-                // appId: order.getString("appid");
-                // partnerId: order.getString("partnerId");
-                // prepayId: order.getString("prepayid");
-                // packageValue: "Sign=WXPay";
-                // nonceStr: order.getString("nonceStr");
-                // timeStamp: order.getInt("timestamp") + "";
-                // sign: order.getString("sign");
-            })
+            wxpay
+                .pay({
+                    appid: 'wxa107cc3f0dc90742',
+                    partnerId: '1602203076',
+                    prepayid: '',
+                    nonceStr: 'bey',
+                    timestamp: new Date().getTime(),
+                    sign: '20f46148b72d8e5e5ca23d37a4f41490',
+                    // appId: order.getString("appid");
+                    // partnerId: order.getString("partnerId");
+                    // prepayId: order.getString("prepayid");
+                    // nonceStr: order.getString("nonceStr");
+                    // timeStamp: order.getInt("timestamp") + "";
+                    // sign: order.getString("sign");
+                })
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err))
         }
     })
     // navigation.navigate('Result')

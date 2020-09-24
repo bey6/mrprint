@@ -5,6 +5,7 @@ import {
     StyleSheet,
     TouchableNativeFeedback,
     Dimensions,
+    Alert,
 } from 'react-native'
 import {
     Button,
@@ -22,9 +23,41 @@ import store from '../store/store.js'
 import {observer} from 'mobx-react'
 
 @observer
-class ApplyScreen extends React.Component {
-    onPress(navigation) {
-        navigation.navigate('Select')
+export default class ApplyScreen extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            face: require('../assets/身份证正面.png'),
+            emblem: require('../assets/身份证国徽面.png'),
+            person: require('../assets/手持身份证.png'),
+        }
+        this.height = Math.ceil(Dimensions.get('window').height) - 160
+        this.localStyles = StyleSheet.create({
+            buttonView: {
+                padding: 12,
+            },
+            button: {
+                margin: 12,
+                height: 30,
+            },
+            photo: {
+                borderRadius: 5,
+                width: '100%',
+            },
+            inlineTextImage: {
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                margin: 12,
+            },
+        })
+    }
+    onPress() {
+        let msg = ''
+        if (!store.appStore.name) msg = '姓名不可为空'
+        else if (!store.appStore.idno) msg = '身份证号码不可为空'
+        if (msg) Alert.alert(msg)
+        else this.props.navigation.navigate('Select')
     }
     getPicture(fields) {
         ImagePicker.showImagePicker(
@@ -60,42 +93,14 @@ class ApplyScreen extends React.Component {
             }
         )
     }
-    setValue(f, v) {
-        console.log(f, v)
+    setValue(v) {
+        store.appStore.setName(v)
     }
     render() {
-        const {navigation} = this.props
-        this.state = {
-            face: require('../assets/身份证正面.png'),
-            emblem: require('../assets/身份证国徽面.png'),
-            person: require('../assets/手持身份证.png'),
-        }
-        const height = Math.ceil(Dimensions.get('window').height) - 160
-        const page_height = height
-        const localStyles = StyleSheet.create({
-            buttonView: {
-                padding: 12,
-            },
-            button: {
-                margin: 12,
-                height: 30,
-            },
-            photo: {
-                borderRadius: 5,
-                width: '100%',
-            },
-            inlineTextImage: {
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                margin: 12,
-            },
-        })
-
         return (
             <Container
                 style={{
-                    height: page_height,
+                    height: this.height,
                 }}>
                 <Content>
                     <Form>
@@ -103,9 +108,8 @@ class ApplyScreen extends React.Component {
                             <Label>姓名</Label>
                             <Input
                                 value={store.appStore.name}
-                                onChange={
-                                    (text) => console.log(text)
-                                    // store.appStore.setValue('name', text)
+                                onChangeText={(text) =>
+                                    store.appStore.setName(text)
                                 }
                             />
                         </Item>
@@ -113,38 +117,36 @@ class ApplyScreen extends React.Component {
                             <Label>身份证号码</Label>
                             <Input
                                 value={store.appStore.idno}
-                                onChangeText={
-                                    (text) => this.setValue('idno', text)
-                                    // store.appStore.setValue('idno', text)
-                                }
+                                onChangeText={(text) => {
+                                    store.appStore.setValue('idno', text)
+                                }}
                             />
                         </Item>
-
-                        <View style={localStyles.inlineTextImage}>
+                        <View style={this.localStyles.inlineTextImage}>
                             <TouchableNativeFeedback
                                 onPress={() => this.getPicture('face')}>
                                 <Image
-                                    style={localStyles.photo}
+                                    style={this.localStyles.photo}
                                     resizeMode="contain"
                                     source={this.state.face}
                                 />
                             </TouchableNativeFeedback>
                         </View>
-                        <View style={localStyles.inlineTextImage}>
+                        <View style={this.localStyles.inlineTextImage}>
                             <TouchableNativeFeedback
                                 onPress={() => this.getPicture('emblem')}>
                                 <Image
-                                    style={localStyles.photo}
+                                    style={this.localStyles.photo}
                                     resizeMode="contain"
                                     source={this.state.emblem}
                                 />
                             </TouchableNativeFeedback>
                         </View>
-                        <View style={localStyles.inlineTextImage}>
+                        <View style={this.localStyles.inlineTextImage}>
                             <TouchableNativeFeedback
                                 onPress={() => this.getPicture('person')}>
                                 <Image
-                                    style={localStyles.photo}
+                                    style={this.localStyles.photo}
                                     resizeMode="contain"
                                     source={this.state.person}
                                 />
@@ -153,7 +155,7 @@ class ApplyScreen extends React.Component {
                     </Form>
                     <Button
                         full
-                        onPress={() => this.onPress(navigation)}
+                        onPress={() => this.onPress()}
                         style={styles.button}>
                         <Text style={styles.button__text}>下一步</Text>
                     </Button>
@@ -162,4 +164,3 @@ class ApplyScreen extends React.Component {
         )
     }
 }
-export default ApplyScreen

@@ -28,7 +28,7 @@ export default function HomeScreen({navigation}) {
                         </Right>
                     </ListItem>
                 </TouchableNativeFeedback>
-                <TouchableNativeFeedback
+                {/* <TouchableNativeFeedback
                     onPress={() => navigation.navigate('Face')}>
                     <ListItem selected>
                         <Left>
@@ -71,7 +71,7 @@ export default function HomeScreen({navigation}) {
                             <Icon name="arrow-forward" />
                         </Right>
                     </ListItem>
-                </TouchableNativeFeedback>
+                </TouchableNativeFeedback> */}
             </List>
         </Container>
     )
