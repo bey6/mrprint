@@ -115,23 +115,19 @@ function doPurchase(navigation) {
         console.log(isSupported)
         if (isSupported) {
             wxpay
-                .pay({
-                    appid: 'wxa107cc3f0dc90742',
-                    partnerId: '1602203076',
-                    prepayid: '',
-                    nonceStr: 'bey',
-                    timestamp: new Date().getTime(),
-                    sign: '20f46148b72d8e5e5ca23d37a4f41490',
-                    // appId: order.getString("appid");
-                    // partnerId: order.getString("partnerId");
-                    // prepayId: order.getString("prepayid");
-                    // nonceStr: order.getString("nonceStr");
-                    // timeStamp: order.getInt("timestamp") + "";
-                    // sign: order.getString("sign");
-                })
+                .pay({})
                 .then((res) => console.log(res))
                 .catch((err) => console.log(err))
         }
+
+        // {
+        // appid: 'wxa107cc3f0dc90742',
+        // partnerId: '1602203076', //
+        // prepayid: '',
+        // nonceStr: 'bey',
+        // timestamp: new Date().getTime(),
+        // sign: '20f46148b72d8e5e5ca23d37a4f41490',
+        // }
     })
     // navigation.navigate('Result')
 }
