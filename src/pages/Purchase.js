@@ -1,138 +1,26 @@
 import React from 'react'
 import {View, Text, StyleSheet, Image} from 'react-native'
-import {Button, List, ListItem, Left, Body} from 'native-base'
+import {
+    Container,
+    Content,
+    Button,
+    List,
+    ListItem,
+    Left,
+    Body,
+} from 'native-base'
 import style from '../styles/style'
 import wxpay from '../sdk/wxpay'
+import store from '../store/store'
 
-export default function Purchase({navigation}) {
-    const alipay = require('../assets/alipay.png')
-    const wechat = require('../assets/wechat.png')
-    // const height = Math.ceil(Dimensions.get('window').height) - 600 //183
-
-    let styles = StyleSheet.create({
-        label: {
-            width: 150,
-        },
-        label_font: {
-            fontSize: 20,
-            fontWeight: '700',
-        },
-        content_font: {
-            fontSize: 20,
-        },
-        row: {
-            flexDirection: 'row',
-            height: 40,
-        },
-    })
-    const [checked, onChecked] = React.useState(
-        require('../assets/checked.png')
-    )
-
-    return (
-        <View>
-            <List>
-                <ListItem noIndent>
-                    <Left>
-                        <Text style={styles.label_font}>病案号</Text>
-                    </Left>
-                    <Body>
-                        <Text style={styles.content_font}>2020091</Text>
-                    </Body>
-                </ListItem>
-                <ListItem>
-                    <Left>
-                        <Text style={styles.label_font}>姓名</Text>
-                    </Left>
-                    <Body>
-                        <Text style={styles.content_font}>张珊</Text>
-                    </Body>
-                </ListItem>
-                <ListItem>
-                    <Left>
-                        <Text style={styles.label_font}>住院时间</Text>
-                    </Left>
-                    <Body>
-                        <Text style={styles.content_font}>2020-01-01</Text>
-                    </Body>
-                </ListItem>
-                <ListItem>
-                    <Left>
-                        <Text style={styles.label_font}>打印页数</Text>
-                    </Left>
-                    <Body>
-                        <Text style={styles.content_font}>23</Text>
-                    </Body>
-                </ListItem>
-                <ListItem>
-                    <Left>
-                        <Text style={styles.label_font}>打印费用</Text>
-                    </Left>
-                    <Body>
-                        <Text style={styles.content_font}>22.1</Text>
-                    </Body>
-                </ListItem>
-            </List>
-
-            <View style={pageStyle.horizontal_line}>
-                <Text style={pageStyle.horizontal_text}>选择付款方式</Text>
-            </View>
-
-            <View style={pageStyle.purchase_list}>
-                <View style={pageStyle.purchase_list__icon}>
-                    <Image source={wechat} />
-                </View>
-                <View style={pageStyle.purchase_list__content}>
-                    <Text>微信支付</Text>
-                </View>
-                <View style={pageStyle.purchase_list__checked}>
-                    <Image source={checked} />
-                </View>
-            </View>
-            <View style={pageStyle.purchase_list}>
-                <View style={pageStyle.purchase_list__icon}>
-                    <Image source={alipay} />
-                </View>
-                <View style={pageStyle.purchase_list__content}>
-                    <Text>支付宝支付</Text>
-                </View>
-                <View style={pageStyle.purchase_list__checked}>
-                    <Image source={require('../assets/unchecked.png')} />
-                </View>
-            </View>
-
-            <View style={style.button_container}>
-                <Button onPress={() => doPurchase(navigation)} full>
-                    <Text style={style.button__text}>确认支付</Text>
-                </Button>
-            </View>
-        </View>
-    )
-}
-
-function doPurchase(navigation) {
-    wxpay.isSupported().then((isSupported) => {
-        console.log(isSupported)
-        if (isSupported) {
-            wxpay
-                .pay({})
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err))
-        }
-
-        // {
-        // appid: 'wxa107cc3f0dc90742',
-        // partnerId: '1602203076', //
-        // prepayid: '',
-        // nonceStr: 'bey',
-        // timestamp: new Date().getTime(),
-        // sign: '20f46148b72d8e5e5ca23d37a4f41490',
-        // }
-    })
-    // navigation.navigate('Result')
-}
+const alipay = require('../assets/alipay.png')
+const wechat = require('../assets/wechat.png')
+// const height = Math.ceil(Dimensions.get('window').height) - 600 //183
 
 const pageStyle = StyleSheet.create({
+    section_name: {
+        fontSize: 16,
+    },
     horizontal_line: {
         borderBottomColor: '#e4e4e4',
         borderBottomWidth: 1,
@@ -162,3 +50,125 @@ const pageStyle = StyleSheet.create({
         width: 50,
     },
 })
+
+export default class Purchase extends React.Component {
+    constructor() {
+        super()
+    }
+
+    doPurchase() {
+        wxpay
+            .isSupported()
+            .then((isSupported) => {
+                if (isSupported) {
+                    console.log('supported wechat pay.')
+                    wxpay
+                        .order()
+                        .then((res) => {
+                            this.props.navigation.navigate('Result')
+                        })
+                        .catch(() => console.log('err'))
+                    // .pay()
+                    // .then((res) => console.log(res))
+                    // .catch((err) => console.log(err))
+                }
+
+                // {
+                // appid: 'wxa107cc3f0dc90742',
+                // partnerId: '1602203076', //
+                // prepayid: '',
+                // nonceStr: 'bey',
+                // timestamp: new Date().getTime(),
+                // sign: '20f46148b72d8e5e5ca23d37a4f41490',
+                // }
+            })
+            .catch((err) => console.log(err))
+    }
+
+    render() {
+        return (
+            <Container>
+                <Content>
+                    <List>
+                        <ListItem itemHeader first>
+                            <Text style={pageStyle.section_name}>
+                                选择的信息
+                            </Text>
+                        </ListItem>
+                        <ListItem noIndent>
+                            <Left>
+                                <Text>病案号</Text>
+                            </Left>
+                            <Body>
+                                <Text>2020091</Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem>
+                            <Left>
+                                <Text>姓名</Text>
+                            </Left>
+                            <Body>
+                                <Text>{store.appStore.name}</Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem>
+                            <Left>
+                                <Text>打印页数</Text>
+                            </Left>
+                            <Body>
+                                <Text>
+                                    {10 * store.appStore.selectedMr.length}
+                                </Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem>
+                            <Left>
+                                <Text>打印费用</Text>
+                            </Left>
+                            <Body>
+                                <Text>
+                                    {10 *
+                                        store.appStore.selectedMr.length *
+                                        0.5}
+                                </Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem itemHeader>
+                            <Text style={pageStyle.section_name}>付款方式</Text>
+                        </ListItem>
+                        <ListItem>
+                            <Left>
+                                <Image
+                                    style={{
+                                        paddingTop: 12,
+                                    }}
+                                    source={require('../assets/wxpaylogo.png')}
+                                />
+                                <Image
+                                    style={{
+                                        marginTop: 8,
+                                    }}
+                                    source={require('../assets/recommend.png')}
+                                />
+                            </Left>
+                            <Body
+                                style={{
+                                    alignItems: 'flex-end',
+                                }}>
+                                <Image
+                                    source={require('../assets/checked.png')}
+                                />
+                            </Body>
+                        </ListItem>
+                    </List>
+                    <Button
+                        full
+                        style={style.button}
+                        onPress={() => this.doPurchase()}>
+                        <Text style={style.button__text}>确认支付</Text>
+                    </Button>
+                </Content>
+            </Container>
+        )
+    }
+}

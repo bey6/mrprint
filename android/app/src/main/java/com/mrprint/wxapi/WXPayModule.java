@@ -9,10 +9,21 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
+
 public class WxPayModule extends ReactContextBaseJavaModule {
     private IWXAPI api;
     static String APP_ID = "wxa107cc3f0dc90742";
     static Promise promise = null;
+    static String MCH_ID = "1602203076";
 
     WxPayModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -26,84 +37,24 @@ public class WxPayModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     // public void registerApp(String APP_ID) { // 向微信注册
-    public void registerApp() {
-        WxPayModule.APP_ID = APP_ID;
+    public void registerApp(String APP_ID) {
+        // WxPayModule.APP_ID = APP_ID;
         api.registerApp(APP_ID);
     }
 
-    // @RequestMapping(value = "dop", method = RequestMethod.POST)
-    // public JsonBack order(HttpServletRequest request, JsonBack jsonBack,
-    // HttpServletResponse response,
-    // String membertoken, int num, String id) throws Exception {
-
-    // Member mem = MemberServiceImp.loginMemberMap.get("token");
-    // if (mem.getMemberToken().equals(membertoken)) {
-    // MemberLevel level = memberLevelService.getMemberLevelById(id);
-    // int x = Integer.parseInt(level.getLevelMoney());
-    // int cc = x * num * 100;// 微信以分为单位，如果数据库里面的价格没扩大100的话这里要乘以100
-    // String total_fee = cc + "";
-    // String body = ConstantUtil.BODY;
-    // String mch_id = ConstantUtil.MCH_ID;
-    // String currTime = PayCommonUtil.getCurrTime();
-    // String strTime = currTime.substring(8, currTime.length());
-    // String strRandom = PayCommonUtil.buildRandom(4) + "";
-    // String nonce_str = strTime + strRandom;
-    // String notify_url = ConstantUtil.NOTIFY_URL;// 回调地址 必须能直接访问 不是二级域名也可以
-    // String out_trade_no = String.valueOf(UUID.next()); // 订单号
-    // String timestamp = WXUtil.getTimeStamp();
-    // SortedMap<Object, Object> packageParams = new TreeMap<Object, Object>();
-    // packageParams.put("appid", ConstantUtil.APP_ID);
-    // packageParams.put("mch_id", mch_id);
-    // packageParams.put("nonce_str", nonce_str);
-    // packageParams.put("body", body);// 商品描述
-    // packageParams.put("out_trade_no", out_trade_no);// 商户订单号
-    // packageParams.put("total_fee", total_fee);// 总金额
-    // String addr = AddressUtils.getIpAddr(request);
-    // packageParams.put("spbill_create_ip", addr);// 发起人IP地址
-    // packageParams.put("notify_url", notify_url);// 回调地址
-    // packageParams.put("trade_type", "APP");// 交易类型
-    // packageParams.put("time_start", timestamp);
-    // String sign = PayCommonUtil.createSign("UTF-8", packageParams,
-    // ConstantUtil.APP_KEY);
-    // packageParams.put("sign", sign);// 签名
-    // String requestXML = PayCommonUtil.getRequestXml(packageParams);
-    // String resXml = HttpUtil.postData(ConstantUtil.NOTIFY_URL, requestXML);
-    // Map map = XMLUtil.doXMLParse(resXml);
-    // String returnCode = (String) map.get("return_code");
-    // String returnMsg = (String) map.get("return_msg");
-    // logger.info("result:" + returnMsg);
-    // if ("SUCCESS".equals(returnCode)) {
-    // String resultCode = (String) map.get("result_code");
-    // String prepay_id = (String) map.get("prepay_id");
-    // String noncestr = (String) map.get("nonce_str");
-    // if ("SUCCESS".equals(resultCode)) {
-    // System.out.println("获取prepay_id成功" + prepay_id);//
-    // 必须获取到这个prepay_id才算微信认可了你的第一次签名
-    // // 这里写预下单业务逻辑
-    // SortedMap<Object, Object> packageParam = new TreeMap<Object, Object>();
-    // // ConfigUtil.commonParams(packageParams);
-    // packageParam.put("appid", ConstantUtil.APP_ID);
-    // packageParam.put("partnerid", mch_id);
-    // packageParam.put("noncestr", noncestr);
-    // packageParam.put("prepayid", prepay_id);// 商品描述
-    // packageParam.put("package", "Sign=WXPay");// 商户订单号
-    // packageParam.put("timestamp", timestamp);
-    // String sign1 = PayCommonUtil.createSign("UTF-8", packageParam,
-    // ConstantUtil.APP_KEY);// 这里是二次签名
-    // // 前台要拿到去调起微信支付，如果这个错了的话会在前台报签名错误
-    // map.put("partnerid", mch_id);
-    // map.put("timestamp", timestamp);
-    // map.put("package", "Sign=WXPay");
-    // map.put("retcode", "0");
-    // map.put("sign", sign1);
-    // jsonBack = new JsonBack(true, "success", map);
-    // }
-    // }
-    // } else {
-    // jsonBack = new JsonBack(false, "token不一致", null);
-    // }
-    // return jsonBack;
-    // }
+    private String MD5(String plainText) {
+        byte[] secretBytes = null;
+        try {
+            secretBytes = MessageDigest.getInstance("MD5").digest(plainText.getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("没有这个md5算法！");
+        }
+        String md5code = new BigInteger(1, secretBytes).toString(16);
+        for (int i = 0; i < 32 - md5code.length(); i++) {
+            md5code = "0" + md5code;
+        }
+        return md5code;
+    }
 
     @ReactMethod
     public void pay(final ReadableMap order, Promise promise) {
@@ -127,67 +78,123 @@ public class WxPayModule extends ReactContextBaseJavaModule {
         promise.resolve(isSupported);
     }
 
-    public void order() {
+    private String genNonce() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    // private String pickupOrderPayload(Stirng tradeType) {
+    // Map<String, String> map = new LinkedHashMap<>();
+    // map.put("appid", "wx2c3865766f57ccb0");// 微信支付分配的公众账号ID（企业号corpid即为此appId）
+    // map.put("attach", "支付测试");// 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
+    // map.put("body", "JSAPI支付测试");// 商品简单描述，该字段请按照规范传递
+    // map.put("mch_id", "1344819501");// 微信支付分配的商户号
+    // map.put("nonce_str", genNonce());// 随机字符串，长度要求在32位以内。推荐随机数生成算法
+    // // 1add1a30ac87aa2db72f57a2375d8fec
+    // map.put("notify_url", "http://wxpay.wxutil.com/pub_v2/pay/notify.v2.php");//
+    // 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
+    // // map.put("openid", "oUpF8uMuAJO_M2pxb1Q9zNjWeS6o");//
+    // //
+    // trade_type=JSAPI时（即公众号支付），此参数必传，此参数为微信用户在商户对应appid下的唯一标识https://pay.weixin.qq.com/wiki/doc/api/wap.php?chapter=4_4
+    // // 获取的地址
+    // map.put("out_trade_no", genNonce());// 商户系统内部订单号，要求32个字符内、且在同一个商户号下唯一
+    // map.put("spbill_create_ip", "127.0.0.1");//
+    // APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP
+    // map.put("total_fee", "100");// 订单总金额，单位为分
+    // map.put("trade_type", tradeType);// 取值如下：JSAPI，NATIVE，APP，MWEB等
+
+    // String sign = getSign(map);
+    // map.put("sign", sign);// 通过签名算法计算得出的签名值
+
+    // String xmlstring = toXml(map);
+    // return xmlstring;
+    // }
+
+    private String getPayload() {
+        String nonce_str = genNonce();
+        String trade_no = genNonce();
         // 拼接字段，顺序不能变
-        String A = "appid=你的appID" + "&body=jinshi" + "&mch_id=你的商户号" + "&nonce_str=" + nonce_str
+        String A = "appid=" + APP_ID + "&body=bey" + "&mch_id=" + MCH_ID + "&nonce_str=" + nonce_str
                 + "&notify_url=http://www.szgsip.com/" + "&out_trade_no=" + trade_no + "&spbill_create_ip=192.168.1.1"
                 + "&total_fee=1" + "&trade_type=APP";
-        String key = "你的密钥";
+        String key = "123456"; // 这个可能是交易密码
         String temp = A + "&key=" + key;
         // 生成sign
-        String sign = MD5.getMessageDigest(temp.getBytes()).toUpperCase();
+        String sign = MD5(temp).toUpperCase();
+        StringBuffer xml = new StringBuffer();
 
         xml.append("<xml>\n");
-        xml.append("<appid>你的appID</appid>\n");
-        xml.append("<body>jinshi</body>\n");
-        xml.append("<mch_id>你的商户号</mch_id>\n");
+        xml.append("<appid>" + APP_ID /* APP_ID */ + "</appid>\n");
+        xml.append("<body>病案邮寄打印费用</body>\n");
+        xml.append("<mch_id>" + MCH_ID /* 商户ID */ + "</mch_id>\n");
         xml.append("<nonce_str>" + nonce_str + "</nonce_str>\n");
-        xml.append("<notify_url>http://www.szgsip.com/</notify_url>\n");
-        xml.append("<out_trade_no>" + trade_no + "</out_trade_no>\n");
+        // 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
+        // xml.append("<notify_url>http://www.szgsip.com/</notify_url>\n");
+        xml.append("<out_trade_no>" + trade_no + "</out_trade_no>\n"); // 商户系统内部订单号，要求32个字符内、且在同一个商户号下唯一
         xml.append("<spbill_create_ip>192.168.1.1</spbill_create_ip>\n");
         xml.append("<total_fee>1</total_fee>\n");
-        xml.append("<trade_type>APP</trade_type>\n");
-        xml.append("<sign>" + sign + "</sign>\n");
+        xml.append("<trade_type>APP</trade_type>\n"); // 取值如下：JSAPI，NATIVE，APP，MWEB等
+        xml.append("<sign>" + sign + "</sign>\n"); // 通过签名算法计算得出的签名值
         xml.append("</xml>");
+        return xml.toString();
+    }
 
+    @ReactMethod
+    public Integer order(Promise promise) {
+        String payload = getPayload();
         try {
-            final byte[] xmlbyte = xml.toString().getBytes("UTF-8");
-            System.out.println(xml);
             URL url = new URL("https://api.mch.weixin.qq.com/pay/unifiedorder");
-            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setConnectTimeout(5000);
-            conn.setDoOutput(true);// 允许输出
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            // 设置允许输出
+            conn.setDoOutput(true);
             conn.setDoInput(true);
-            conn.setUseCaches(false);// 不使用缓存
+            // 设置不用缓存
+            conn.setUseCaches(false);
+            // 设置传递方式
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Connection", "Keep-Alive");// 维持长连接
+            // 设置维持长连接
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            // 设置文件字符集:
             conn.setRequestProperty("Charset", "UTF-8");
-            conn.setRequestProperty("Content-Length", String.valueOf(xmlbyte.length));
-            conn.setRequestProperty("Content-Type", "text/xml; charset=UTF-8");
-            conn.setRequestProperty("X-ClientType", "2");// 发送自定义的头信息
-            conn.getOutputStream().write(xmlbyte);
-            conn.getOutputStream().flush();
-            conn.getOutputStream().close();
-
-            if (conn.getResponseCode() != 200)
-                throw new RuntimeException("请求url失败");
-
-            InputStream is = conn.getInputStream();// 获取返回数据
-
-            // 使用输出流来输出字符(可选)
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = is.read(buf)) != -1) {
-                out.write(buf, 0, len);
-            }
-            String string = out.toString("UTF-8");
-            System.out.println(string);
-            Log.e("  微信返回数据 ", " --- " + string);
+            // 转换为字节数组
+            byte[] data = payload.toString().getBytes("UTF-8");
+            // 设置文件长度
+            conn.setRequestProperty("Content-Length", String.valueOf(data.length));
+            // 设置文件类型:
+            conn.setRequestProperty("contentType", "text/xml");
+            // 开始连接请求
+            conn.connect();
+            OutputStream out = conn.getOutputStream();
+            // 写入请求的字符串
+            out.write(data);
+            out.flush();
             out.close();
+            Android.Log.d()
+            System.out.println(conn.getResponseCode());
+            // 请求返回的状态
+            if (conn.getResponseCode() == 200) {
+                System.out.println(">>>>>>>>连接成功");
+                // 请求返回的数据
+                InputStream in = conn.getInputStream();
+                String a = null;
+                try {
+                    byte[] data1 = new byte[in.available()];
+                    in.read(data1);
+                    // 转成字符串
+                    a = new String(data1);
+                    System.out.println(">>>>a>" + a);
+                    return 186;
+                    // return decodeXml(a);// 把返回的xml字符串转化成map对象
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    return 190;
+                }
+            } else {
+                System.out.println("no++");
+                return 195;
+            }
         } catch (Exception e) {
             System.out.println(e);
+            return 198;
         }
     }
 }
